@@ -7,21 +7,25 @@ public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
-        if (n <= 0 || trials <= 0) { throw new IllegalArgumentException(); }
+        if (n > 0 && trials > 0) {
+            this.estimates = new double[trials];
 
-        this.estimates = new double[trials];
+            for(int trial = 0; trial < trials; ++trial) {
+                Percolation percolation = new Percolation(n);
 
-        for (int trial = 0; trial < trials; trial++) {
-            Percolation percolation = new Percolation(n);
-            while (!percolation.percolates()) {
-                int row = StdRandom.uniform(1, n + 1);
-                int col = StdRandom.uniform(1, n + 1);
-                if (!percolation.isOpen(row, col)) {
-                    percolation.open(row, col);
+                while(!percolation.percolates()) {
+                    int row = StdRandom.uniform(1, n + 1);
+                    int col = StdRandom.uniform(1, n + 1);
+                    if (!percolation.isOpen(row, col)) {
+                        percolation.open(row, col);
+                    }
                 }
+
+                this.estimates[trial] = (double)percolation.numberOfOpenSites() / (double)(n * n);
             }
 
-            this.estimates[trial] = ((double)percolation.numberOfOpenSites() / (n * n));
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 
