@@ -10,10 +10,10 @@ public class PercolationStats {
         if (n > 0 && trials > 0) {
             this.estimates = new double[trials];
 
-            for(int trial = 0; trial < trials; ++trial) {
+            for (int trial = 0; trial < trials; ++trial) {
                 Percolation percolation = new Percolation(n);
 
-                while(!percolation.percolates()) {
+                while (!percolation.percolates()) {
                     int row = StdRandom.uniform(1, n + 1);
                     int col = StdRandom.uniform(1, n + 1);
                     if (!percolation.isOpen(row, col)) {
@@ -53,9 +53,9 @@ public class PercolationStats {
     public static void main(String[] args) {
         PercolationStats stats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 
-        System.out.println("mean                    =  " + stats.mean());
-        System.out.println("stddev                  =  " + stats.stddev());
-        System.out.println("95% confidence interval = [" + stats.confidenceLo() + ", " + stats.confidenceHi() + "]");
+        StdOut.println("mean                    =  " + stats.mean());
+        StdOut.println("stddev                  =  " + stats.stddev());
+        StdOut.println("95% confidence interval =  [" + stats.confidenceLo() + ", " + stats.confidenceHi() + "]");
     }
 
 }
